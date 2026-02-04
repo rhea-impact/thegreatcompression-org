@@ -8,7 +8,9 @@
 
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { useState, useEffect, useRef, createContext, useContext } from 'react';
 import { compressionCards } from '../data/compressions';
+import { heroSlides, flipBookPages } from '../data/heroSlides';
 import { StoryCard } from '../components/compression';
 import {
   GrainOverlay,
@@ -19,62 +21,23 @@ import {
   ThemeToggle,
 } from '../components/v2';
 import { FlipBookNav } from '../components/FlipBookNav';
+import { TimelineIndicator, type TimelineEra } from '../components/TimelineIndicator';
 import { SmoothScrollProvider } from '../providers/SmoothScroll';
 import { useTheme, useThemeColors } from '../providers/ThemeProvider';
-import {
-  Plane,
-  PieChart,
-  Globe,
-  HelpCircle,
-  DollarSign,
-  Zap,
-  UserX,
-  Users,
-  Scissors,
-  History,
-  Radio,
-  Tv,
-  Camera,
-  Repeat,
-  Bot,
-  Sparkles,
-  Layers,
-  TrendingUp,
-  BookOpen,
-  Rocket,
-  ChevronDown,
-  type LucideIcon,
-} from 'lucide-react';
+import { ChevronDown, type LucideIcon } from 'lucide-react';
 
-// Define flip book pages for navigation
-const flipBookPages = [
-  { id: 'hook', label: 'Travel agents' },
-  { id: 'stat-old', label: '80% booked by agents' },
-  { id: 'shift', label: 'The internet' },
-  { id: 'stat-new', label: '5% today' },
-  { id: 'question', label: 'What happened?' },
-  { id: 'commissions', label: 'Commissions cut' },
-  { id: 'faster', label: 'Faster & cheaper' },
-  { id: 'no-middleman', label: 'No middleman needed' },
-  { id: 'jobs', label: '124,000 jobs' },
-  { id: 'collapsed', label: 'Layers collapsed' },
-  { id: 'before', label: 'Happened before' },
-  { id: 'telegraph', label: 'Telegraph' },
-  { id: 'streaming', label: 'Streaming' },
-  { id: 'kodak', label: 'Kodak' },
-  { id: 'pattern', label: 'The pattern' },
-  { id: 'value-chain', label: 'Value chain' },
-  { id: 'chain-visual', label: 'The steps' },
-  { id: 'shorter', label: 'Gets shorter' },
-  { id: 'compressed', label: 'Fewer jobs' },
-  { id: 'compression-def', label: 'Compression' },
-  { id: 'ai', label: 'AI is compressing' },
-  { id: 'we-call-it', label: 'We call it...' },
-  { id: 'title', label: 'The Great Compression' },
-  { id: 'accelerating', label: '2026' },
-  { id: 'documented', label: 'Documented' },
-  { id: 'imagine', label: 'Imagine' },
-];
+// Context for tracking current era across FlipPages
+const EraContext = createContext<{
+  setCurrentEra: (era: TimelineEra | null) => void;
+}>({ setCurrentEra: () => {} });
+
+// Create lookup map for slide metadata by ID
+const slideMap = new Map(heroSlides.map(slide => [slide.id, slide]));
+
+// Helper to get slide data by ID
+function getSlide(id: string) {
+  return slideMap.get(id);
+}
 
 export function HomePage() {
   const { isDark } = useTheme();
@@ -701,22 +664,50 @@ function FlipPage({
   children,
   background,
   icon,
+  era,
   isLast = false,
 }: {
   children: React.ReactNode;
   background: string;
   icon?: LucideIcon;
+  era?: TimelineEra;
   isLast?: boolean;
 }) {
+  const pageRef = useRef<HTMLDivElement>(null);
+  const { setCurrentEra } = useContext(EraContext);
+
+  // Use intersection observer to detect when this page is visible
+  useEffect(() => {
+    const element = pageRef.current;
+    if (!element) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
+            setCurrentEra(era || null);
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [era, setCurrentEra]);
+
   return (
     <div
+      ref={pageRef}
       style={{
         height: '100vh',
         display: 'flex',
+        flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
         textAlign: 'center',
         padding: '24px',
+        paddingTop: '100px', // Space for fixed timeline
         paddingBottom: '100px',
         position: 'relative',
         background,
@@ -744,15 +735,29 @@ function FlipPage({
 function HeroSection() {
   const { isDark } = useTheme();
   const colors = useThemeColors();
+  const [currentEra, setCurrentEra] = useState<TimelineEra | null>(null);
 
   const bg = isDark
     ? 'radial-gradient(ellipse 80% 50% at 50% -20%, rgba(217, 119, 6, 0.1), transparent), #0c0a09'
     : 'radial-gradient(ellipse 80% 50% at 50% -20%, rgba(146, 64, 14, 0.1), transparent), linear-gradient(180deg, #faf8f5 0%, #ffffff 100%)';
 
   return (
-    <>
+    <EraContext.Provider value={{ setCurrentEra }}>
+      {/* Fixed Timeline Indicator */}
+      <div
+        style={{
+          position: 'fixed',
+          top: '16px',
+          left: 0,
+          right: 0,
+          zIndex: 100,
+          pointerEvents: 'none',
+        }}
+      >
+        <TimelineIndicator era={currentEra} minYear={1870} maxYear={2030} />
+      </div>
       {/* Page 1: Personal hook */}
-      <FlipPage background={bg} icon={Plane}>
+      <FlipPage background={bg} icon={getSlide('hook')!.icon} era={getSlide('hook')?.era}>
         <p style={{
           fontSize: 'clamp(22px, 4vw, 36px)',
           color: colors.textMuted,
@@ -764,7 +769,7 @@ function HeroSection() {
       </FlipPage>
 
       {/* Page 2: The old stat - 80% through agents */}
-      <FlipPage background={bg} icon={PieChart}>
+      <FlipPage background={bg} icon={getSlide('stat-old')!.icon} era={getSlide('stat-old')?.era}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '32px', flexWrap: 'wrap', justifyContent: 'center' }}>
           <div style={{ position: 'relative', width: '140px', height: '140px', flexShrink: 0 }}>
             <svg viewBox="0 0 100 100" style={{ width: '100%', height: '100%', transform: 'rotate(-90deg)' }}>
@@ -798,7 +803,7 @@ function HeroSection() {
       </FlipPage>
 
       {/* Page 3: The shift */}
-      <FlipPage background={bg} icon={Globe}>
+      <FlipPage background={bg} icon={getSlide('shift')!.icon} era={getSlide('shift')?.era}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '24px' }}>
           <motion.img
             src="/images/aol1.png"
@@ -823,7 +828,7 @@ function HeroSection() {
       </FlipPage>
 
       {/* Page 4: The new stat - only 5% through agents now */}
-      <FlipPage background={bg} icon={PieChart}>
+      <FlipPage background={bg} icon={getSlide('stat-new')!.icon} era={getSlide('stat-new')?.era}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '32px', flexWrap: 'wrap', justifyContent: 'center' }}>
           <div style={{ position: 'relative', width: '140px', height: '140px', flexShrink: 0 }}>
             <svg viewBox="0 0 100 100" style={{ width: '100%', height: '100%', transform: 'rotate(-90deg)' }}>
@@ -857,7 +862,7 @@ function HeroSection() {
       </FlipPage>
 
       {/* Page 5: The question */}
-      <FlipPage background={bg} icon={HelpCircle}>
+      <FlipPage background={bg} icon={getSlide('question')!.icon} era={getSlide('question')?.era}>
         <p style={{
           fontSize: 'clamp(26px, 5vw, 40px)',
           color: colors.textMuted,
@@ -868,7 +873,7 @@ function HeroSection() {
       </FlipPage>
 
       {/* Page 6: Commissions */}
-      <FlipPage background={bg} icon={DollarSign}>
+      <FlipPage background={bg} icon={getSlide('commissions')!.icon} era={getSlide('commissions')?.era}>
         <p style={{
           fontSize: 'clamp(22px, 4vw, 32px)',
           color: colors.textMuted,
@@ -881,7 +886,7 @@ function HeroSection() {
       </FlipPage>
 
       {/* Page 7: Travel sites - fanned card hand */}
-      <FlipPage background={bg} icon={Zap}>
+      <FlipPage background={bg} icon={getSlide('faster')!.icon} era={getSlide('faster')?.era}>
         <div>
           <p style={{
             fontSize: 'clamp(18px, 3vw, 24px)',
@@ -947,7 +952,7 @@ function HeroSection() {
       </FlipPage>
 
       {/* Page 8: Direct access = no middleman */}
-      <FlipPage background={bg} icon={UserX}>
+      <FlipPage background={bg} icon={getSlide('no-middleman')!.icon} era={getSlide('no-middleman')?.era}>
         <p style={{
           fontSize: 'clamp(22px, 4vw, 32px)',
           color: colors.textMuted,
@@ -960,7 +965,7 @@ function HeroSection() {
       </FlipPage>
 
       {/* Page 10: The number */}
-      <FlipPage background={bg} icon={Users}>
+      <FlipPage background={bg} icon={getSlide('jobs')!.icon} era={getSlide('jobs')?.era}>
         <div>
           <p style={{
             fontSize: 'clamp(48px, 10vw, 80px)',
@@ -983,7 +988,7 @@ function HeroSection() {
       </FlipPage>
 
       {/* Page 11: What happened */}
-      <FlipPage background={bg} icon={Scissors}>
+      <FlipPage background={bg} icon={getSlide('collapsed')!.icon} era={getSlide('collapsed')?.era}>
         <p style={{
           fontSize: 'clamp(22px, 4vw, 32px)',
           color: colors.textMuted,
@@ -996,7 +1001,7 @@ function HeroSection() {
       </FlipPage>
 
       {/* Page 12: It's happened before */}
-      <FlipPage background={bg} icon={History}>
+      <FlipPage background={bg} icon={getSlide('before')!.icon} era={getSlide('before')?.era}>
         <p style={{
           fontSize: 'clamp(22px, 4vw, 32px)',
           color: colors.textMuted,
@@ -1008,7 +1013,7 @@ function HeroSection() {
       </FlipPage>
 
       {/* Page 13: Telegraph */}
-      <FlipPage background={bg} icon={Radio}>
+      <FlipPage background={bg} icon={getSlide('telegraph')!.icon} era={getSlide('telegraph')?.era}>
         <div style={{ maxWidth: '600px' }}>
           <p style={{
             fontSize: '14px',
@@ -1038,7 +1043,7 @@ function HeroSection() {
       </FlipPage>
 
       {/* Page 14: Streaming */}
-      <FlipPage background={bg} icon={Tv}>
+      <FlipPage background={bg} icon={getSlide('streaming')!.icon} era={getSlide('streaming')?.era}>
         <div style={{ maxWidth: '600px' }}>
           <p style={{
             fontSize: '14px',
@@ -1068,7 +1073,7 @@ function HeroSection() {
       </FlipPage>
 
       {/* Page 15: Digital cameras / Kodak */}
-      <FlipPage background={bg} icon={Camera}>
+      <FlipPage background={bg} icon={getSlide('kodak')!.icon} era={getSlide('kodak')?.era}>
         <div style={{ maxWidth: '600px' }}>
           <p style={{
             fontSize: '14px',
@@ -1098,7 +1103,7 @@ function HeroSection() {
       </FlipPage>
 
       {/* Page 16: The pattern */}
-      <FlipPage background={bg} icon={Repeat}>
+      <FlipPage background={bg} icon={getSlide('pattern')!.icon} era={getSlide('pattern')?.era}>
         <p style={{
           fontSize: 'clamp(22px, 4vw, 32px)',
           color: colors.textMuted,
@@ -1112,7 +1117,7 @@ function HeroSection() {
       </FlipPage>
 
       {/* Value Chain Explanation */}
-      <FlipPage background={bg} icon={Layers}>
+      <FlipPage background={bg} icon={getSlide('value-chain')!.icon} era={getSlide('value-chain')?.era}>
         <p style={{
           fontSize: 'clamp(22px, 4vw, 32px)',
           color: colors.textMuted,
@@ -1125,7 +1130,7 @@ function HeroSection() {
       </FlipPage>
 
       {/* Value Chain Visual */}
-      <FlipPage background={bg} icon={Layers}>
+      <FlipPage background={bg} icon={getSlide('chain-visual')!.icon} era={getSlide('chain-visual')?.era}>
         <div style={{ maxWidth: '700px' }}>
           <div style={{
             display: 'flex',
@@ -1162,7 +1167,7 @@ function HeroSection() {
       </FlipPage>
 
       {/* Compression Definition */}
-      <FlipPage background={bg} icon={Scissors}>
+      <FlipPage background={bg} icon={getSlide('shorter')!.icon} era={getSlide('shorter')?.era}>
         <p style={{
           fontSize: 'clamp(22px, 4vw, 32px)',
           color: colors.textMuted,
@@ -1175,7 +1180,7 @@ function HeroSection() {
       </FlipPage>
 
       {/* Compressed Chain Visual */}
-      <FlipPage background={bg} icon={Zap}>
+      <FlipPage background={bg} icon={getSlide('compressed')!.icon} era={getSlide('compressed')?.era}>
         <div style={{ maxWidth: '700px' }}>
           <div style={{
             display: 'flex',
@@ -1212,7 +1217,7 @@ function HeroSection() {
       </FlipPage>
 
       {/* The term */}
-      <FlipPage background={bg} icon={Bot}>
+      <FlipPage background={bg} icon={getSlide('compression-def')!.icon} era={getSlide('compression-def')?.era}>
         <p style={{
           fontSize: 'clamp(22px, 4vw, 32px)',
           color: colors.textMuted,
@@ -1226,7 +1231,7 @@ function HeroSection() {
       </FlipPage>
 
       {/* AI setup */}
-      <FlipPage background={bg} icon={Sparkles}>
+      <FlipPage background={bg} icon={getSlide('ai')!.icon} era={getSlide('ai')?.era}>
         <p style={{
           fontSize: 'clamp(22px, 4vw, 32px)',
           color: colors.textMuted,
@@ -1239,7 +1244,7 @@ function HeroSection() {
       </FlipPage>
 
       {/* We call it */}
-      <FlipPage background={bg} icon={TrendingUp}>
+      <FlipPage background={bg} icon={getSlide('we-call-it')!.icon} era={getSlide('we-call-it')?.era}>
         <p style={{
           fontSize: 'clamp(20px, 4vw, 28px)',
           color: colors.textMuted,
@@ -1250,7 +1255,7 @@ function HeroSection() {
       </FlipPage>
 
       {/* Page 18: The Great Compression (with Depression pun) */}
-      <FlipPage background={bg} icon={Layers}>
+      <FlipPage background={bg} icon={getSlide('title')!.icon} era={getSlide('title')?.era}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <h1 style={{
             fontSize: 'clamp(48px, 12vw, 100px)',
@@ -1298,7 +1303,7 @@ function HeroSection() {
       </FlipPage>
 
       {/* Page 19: AI in 2026 */}
-      <FlipPage background={bg} icon={TrendingUp}>
+      <FlipPage background={bg} icon={getSlide('accelerating')!.icon} era={getSlide('accelerating')?.era}>
         <p style={{
           fontSize: 'clamp(24px, 5vw, 40px)',
           color: colors.text,
@@ -1312,7 +1317,7 @@ function HeroSection() {
       </FlipPage>
 
       {/* Page 20: We've documented it */}
-      <FlipPage background={bg} icon={BookOpen}>
+      <FlipPage background={bg} icon={getSlide('documented')!.icon} era={getSlide('documented')?.era}>
         <p style={{
           fontSize: 'clamp(22px, 4vw, 32px)',
           color: colors.textMuted,
@@ -1325,7 +1330,7 @@ function HeroSection() {
       </FlipPage>
 
       {/* Page 21: Imagine */}
-      <FlipPage background={bg} icon={Rocket} isLast>
+      <FlipPage background={bg} icon={getSlide('imagine')!.icon} era={getSlide('imagine')?.era} isLast>
         <p style={{
           fontSize: 'clamp(22px, 4vw, 32px)',
           color: colors.text,
@@ -1337,7 +1342,7 @@ function HeroSection() {
           <span style={{ color: colors.accent }}>more compressed than ever before.</span>
         </p>
       </FlipPage>
-    </>
+    </EraContext.Provider>
   );
 }
 

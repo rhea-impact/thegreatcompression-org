@@ -25,6 +25,9 @@ export default [
         fetch: 'readonly',
         URLSearchParams: 'readonly',
         React: 'readonly',
+        HTMLDivElement: 'readonly',
+        IntersectionObserver: 'readonly',
+        IntersectionObserverEntry: 'readonly',
       },
     },
     plugins: {
