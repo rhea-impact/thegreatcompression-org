@@ -34,11 +34,15 @@ function ChainNodeComponent({ node }: ChainNodeComponentProps) {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          fontSize: '28px',
+          fontSize: '14px',
+          fontWeight: 700,
+          fontFamily: "'JetBrains Mono', monospace",
+          color: node.highlighted ? '#1d4ed8' : '#64748b',
           border: node.highlighted ? '2px solid #3b82f6' : '1px solid #e2e8f0',
           boxShadow: node.highlighted
             ? '0 4px 12px rgba(59,130,246,0.15)'
             : '0 1px 3px rgba(0,0,0,0.04)',
+          letterSpacing: '-0.02em',
         }}
       >
         {node.icon}

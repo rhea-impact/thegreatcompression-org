@@ -148,14 +148,16 @@ export function FlexCard({ data }: FlexCardProps) {
         padding: '20px',
       }}
     >
-      <div style={{ fontSize: '24px', marginBottom: '12px' }}>{data.icon}</div>
-      <div style={{ fontSize: '14px', fontWeight: 600, color: '#0f172a', marginBottom: '8px' }}>
+      <div style={{ fontSize: '16px', fontWeight: 600, color: '#0f172a', marginBottom: '12px' }}>
         {data.domain}
       </div>
-      <div style={{ fontSize: '13px', color: '#64748b' }}>
-        <span style={{ color: '#94a3b8' }}>Mass:</span> {data.mass}
-        <br />
-        <span style={{ color: '#3b82f6' }}>Flex:</span> {data.flex}
+      <div style={{ fontSize: '13px', color: '#64748b', lineHeight: 1.6 }}>
+        <div style={{ marginBottom: '8px' }}>
+          <span style={{ color: '#94a3b8', fontWeight: 500 }}>Mass:</span> {data.mass}
+        </div>
+        <div>
+          <span style={{ color: '#3b82f6', fontWeight: 500 }}>Flex:</span> {data.flex}
+        </div>
       </div>
     </div>
   );

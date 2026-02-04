@@ -239,31 +239,31 @@ export const valueChainBefore: ValueChain = {
   variant: 'before',
   nodes: [
     {
-      icon: '❄️',
+      icon: 'S',
       name: 'Snowflake',
       description: 'Data warehouse',
       margin: '+30%',
     },
     {
-      icon: '☁️',
+      icon: 'SF',
       name: 'Salesforce',
       description: 'Visualization',
       margin: '+25%',
     },
     {
-      icon: '📊',
+      icon: 'TR',
       name: 'Thomson Reuters',
       description: 'Compliance tools',
       margin: '+35%',
     },
     {
-      icon: '🏢',
+      icon: 'AF',
       name: 'Accounting Firm',
       description: '4,500 clients',
       margin: '+40%',
     },
     {
-      icon: '👤',
+      icon: 'You',
       name: 'You',
       description: 'Pays $2,000',
       price: '$2,000',
@@ -275,18 +275,18 @@ export const valueChainAfter: ValueChain = {
   variant: 'after',
   nodes: [
     {
-      icon: '👤',
+      icon: 'You',
       name: 'You',
       description: 'Upload docs',
     },
     {
-      icon: '🤖',
+      icon: 'AI',
       name: 'Local AI',
       description: 'Applies tax code',
       highlighted: true,
     },
     {
-      icon: '✅',
+      icon: 'CPA',
       name: 'Accountant',
       description: '$200 review',
       price: '$200',
@@ -404,25 +404,25 @@ export const professionExamples: ProfessionCompression[] = [
 export const flexExamples: FlexExample[] = [
   {
     domain: 'Food',
-    icon: '🍽️',
+    icon: '',
     mass: 'Meal kits, fast food',
     flex: 'Personal chef, farm-to-table',
   },
   {
     domain: 'Finance',
-    icon: '💰',
+    icon: '',
     mass: 'Robo-advisor',
     flex: '"My financial advisor"',
   },
   {
     domain: 'Content',
-    icon: '✍️',
+    icon: '',
     mass: 'AI-generated',
     flex: '"Human-written"',
   },
   {
     domain: 'Clothing',
-    icon: '👔',
+    icon: '',
     mass: 'Algorithmic picks',
     flex: 'Bespoke tailor',
   },
