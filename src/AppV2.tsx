@@ -3,7 +3,7 @@
  * The "alive" version with kinetic typography, scroll animations, and depth
  */
 
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { siteContent } from './content';
 import { Nav } from './components';
 import {

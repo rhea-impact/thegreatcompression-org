@@ -3,7 +3,7 @@
  * Template for each historical compression story
  */
 
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { getStory, getAdjacentStories } from '../data/compressions';
@@ -15,7 +15,6 @@ import {
   StaggerContainer,
   StaggerItem,
   GlassCard,
-  DarkGlassCard,
   ThemeToggle,
 } from '../components/v2';
 import { SmoothScrollProvider } from '../providers/SmoothScroll';
@@ -23,7 +22,6 @@ import { useTheme, useThemeColors } from '../providers/ThemeProvider';
 
 export function CompressionPage() {
   const { slug } = useParams<{ slug: string }>();
-  const navigate = useNavigate();
   const story = getStory(slug || '');
   const { prev, next } = getAdjacentStories(slug || '');
   const { isDark } = useTheme();
@@ -678,7 +676,6 @@ function Section({
   children: React.ReactNode;
   background?: 'white' | 'gray' | 'dark';
 }) {
-  const { isDark } = useTheme();
   const colors = useThemeColors();
 
   const getBgColor = () => {

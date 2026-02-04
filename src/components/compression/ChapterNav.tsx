@@ -4,8 +4,8 @@
  * Shows current chapter and allows quick navigation
  */
 
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import { useState, useEffect, useRef } from 'react';
+import { motion, useScroll, AnimatePresence } from 'framer-motion';
+import { useState, useEffect } from 'react';
 import { useTheme, useThemeColors } from '../../providers/ThemeProvider';
 
 interface Chapter {

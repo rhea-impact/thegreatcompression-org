@@ -17,12 +17,32 @@
 
 ## Deploy
 
+### Auto-Deploy (Recommended)
+
+Push to main branch triggers automatic deployment:
+
 ```bash
-# From project root
+git push origin main
+```
+
+Monitor deployment:
+```bash
+railway service status
+# QUEUED → BUILDING → DEPLOYING → SUCCESS (~50 seconds)
+```
+
+### Manual Deploy
+
+```bash
 railway up --detach
 ```
 
-That's it. Railway auto-builds and deploys.
+## GitHub Integration
+
+- **Repo:** rhea-impact/thegreatcompression-org
+- **Branch:** main
+- **Auto-deploy:** Enabled
+- **Railway GitHub App:** Installed on rhea-impact org
 
 ## Initial Setup (Already Done)
 
