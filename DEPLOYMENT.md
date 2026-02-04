@@ -44,6 +44,51 @@ railway up --detach
 - **Auto-deploy:** Enabled
 - **Railway GitHub App:** Installed on rhea-impact org
 
+## CI/CD Pipeline
+
+### Workflow
+
+```
+develop → feature branch → commit (pre-commit) → push → PR → CI → merge → auto-deploy
+```
+
+### Pre-commit Hooks
+
+Husky + lint-staged runs ESLint on staged files before each commit.
+
+### GitHub Actions CI
+
+On every PR to main:
+1. Type check (`npm run typecheck`)
+2. Build (`npm run build`)
+
+### Branch Protection
+
+- Main branch requires CI to pass before merge
+- Strict mode (branch must be up to date)
+
+### Development Flow
+
+```bash
+# Start from develop
+git checkout develop
+git pull
+
+# Create feature branch
+git checkout -b feature/my-feature
+
+# Make changes, commit (pre-commit runs)
+git add -A
+git commit -m "Add feature"
+
+# Push and create PR
+git push -u origin feature/my-feature
+gh pr create --base main
+
+# After CI passes, merge
+gh pr merge --squash
+```
+
 ## Initial Setup (Already Done)
 
 ### 1. Railway Project Link
