@@ -23,3 +23,19 @@ export {
   CapitalismVisualization,
   BlessingManFlow,
 } from './Visualizations';
+
+// Animated Components
+export {
+  AnimatedSection,
+  AnimatedElement,
+  AnimatedStat,
+  DramaticNumber,
+} from './AnimatedSection';
+
+// Dramatic Components
+export { DramaticSigmoid } from './DramaticSigmoid';
+export {
+  FeaturedHistoryCard,
+  HistoryGridCard,
+  DramaticAccelerationTimeline,
+} from './DramaticHistory';
