@@ -2,7 +2,7 @@
  * Data Display Components
  */
 
-import type { CSSProperties } from 'react';
+// Data Display Components
 import type {
   HistoricalCompression,
   Stat,

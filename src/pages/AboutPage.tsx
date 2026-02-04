@@ -215,7 +215,7 @@ export function AboutPage() {
         {/* All Stories */}
         <Section>
           <Label>Complete Archive</Label>
-          <Headline>All {compressionStories.length} Compression Stories</Headline>
+          <Headline>{`All ${compressionStories.length} Compression Stories`}</Headline>
 
           <div
             style={{

@@ -254,7 +254,7 @@ function ChainNode({
   name,
   type,
   color,
-  jobs,
+  jobs: _jobs,
   compressed,
   showCompressed,
   isEndpoint,

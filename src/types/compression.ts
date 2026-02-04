@@ -33,7 +33,7 @@ export interface KeyDate {
 
 export interface ImageAsset {
   src: string;
-  caption: string;
+  caption?: string;
   credit?: string;
   alt?: string;
 }

@@ -10,7 +10,6 @@ import type {
   Chapter,
   HistoricalCompression,
   CompressionAcceleration,
-  ChainNode,
   ValueChain,
   Stat,
   SigmoidData,
@@ -25,7 +24,6 @@ import type {
   Disclaimer,
   OpenQuestion,
   BlessingManPattern,
-  colors,
 } from './types';
 
 // ============================================

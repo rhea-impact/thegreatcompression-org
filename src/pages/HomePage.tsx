@@ -12,11 +12,8 @@ import {
   GrainOverlay,
   FadeBlur,
   WordReveal,
-  LetterReveal,
   StaggerContainer,
   StaggerItem,
-  GlassCard,
-  SlideIn,
   ThemeToggle,
 } from '../components/v2';
 import { FlipBookNav } from '../components/FlipBookNav';
@@ -26,11 +23,9 @@ import {
   Plane,
   PieChart,
   Globe,
-  Smartphone,
   HelpCircle,
   DollarSign,
   Zap,
-  MousePointer,
   UserX,
   Users,
   Scissors,
@@ -1352,7 +1347,6 @@ function Section({
   children: React.ReactNode;
   background?: 'default' | 'alt';
 }) {
-  const { isDark } = useTheme();
   const colors = useThemeColors();
 
   const bg = background === 'alt' ? colors.bgAlt : colors.bg;
