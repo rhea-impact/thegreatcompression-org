@@ -2,6 +2,8 @@
  * Homepage
  * Integrated thesis + compression evidence grid
  * With dark mode support
+ *
+ * @version 1.0.0 - CI/CD pipeline verified
  */
 
 import { Link } from 'react-router-dom';
