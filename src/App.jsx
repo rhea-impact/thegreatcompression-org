@@ -460,9 +460,223 @@ export default function App() {
         </div>
       </Section>
 
-      {/* Chapter 4: The Pattern */}
-      <Section bg="#f8fafc" id="the-pattern">
-        <Label>Chapter 4</Label>
+      {/* Chapter 4: The Sigmoid */}
+      <Section bg="#f8fafc" id="the-sigmoid">
+        <Label color="#8b5cf6">Chapter 4</Label>
+        <Headline>Compression isn't binary</Headline>
+        <Body>
+          When people hear "AI will replace jobs," they imagine binary outcomes:
+          either the job exists or it doesn't. But that's not how compression works.
+        </Body>
+        <Body>
+          The reality is a <strong>sigmoid</strong> — a curve where the middle
+          disappears while the extremes persist.
+        </Body>
+
+        {/* The Sigmoid Visualization */}
+        <div style={{
+          background: '#ffffff',
+          borderRadius: '16px',
+          border: '1px solid #e2e8f0',
+          padding: '32px 24px',
+          marginTop: '32px',
+          marginBottom: '32px',
+        }}>
+          {/* Before */}
+          <div style={{ marginBottom: '40px' }}>
+            <div style={{
+              fontSize: '12px',
+              fontFamily: "'JetBrains Mono', monospace",
+              color: '#64748b',
+              marginBottom: '12px',
+              textTransform: 'uppercase',
+              letterSpacing: '0.1em',
+            }}>
+              Before Compression
+            </div>
+            <div style={{
+              height: '48px',
+              background: 'linear-gradient(90deg, #475569 0%, #475569 100%)',
+              borderRadius: '8px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: '#ffffff',
+              fontSize: '14px',
+              fontWeight: 500,
+            }}>
+              100% served by humans
+            </div>
+          </div>
+
+          {/* Arrow */}
+          <div style={{
+            display: 'flex',
+            justifyContent: 'center',
+            marginBottom: '24px',
+            color: '#94a3b8',
+          }}>
+            <svg width="24" height="40" viewBox="0 0 24 40">
+              <line x1="12" y1="0" x2="12" y2="32" stroke="currentColor" strokeWidth="2" />
+              <polygon points="6,28 12,38 18,28" fill="currentColor" />
+            </svg>
+          </div>
+
+          {/* After */}
+          <div style={{ marginBottom: '32px' }}>
+            <div style={{
+              fontSize: '12px',
+              fontFamily: "'JetBrains Mono', monospace",
+              color: '#64748b',
+              marginBottom: '12px',
+              textTransform: 'uppercase',
+              letterSpacing: '0.1em',
+            }}>
+              After Compression
+            </div>
+            <div style={{
+              height: '48px',
+              display: 'flex',
+              borderRadius: '8px',
+              overflow: 'hidden',
+            }}>
+              {/* Luxury tier */}
+              <div style={{
+                width: '15%',
+                background: '#3b82f6',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: '#ffffff',
+                fontSize: '11px',
+                fontWeight: 600,
+              }}>
+                Human
+              </div>
+              {/* Collapsed middle */}
+              <div style={{
+                flex: 1,
+                background: 'repeating-linear-gradient(45deg, #f1f5f9, #f1f5f9 10px, #e2e8f0 10px, #e2e8f0 20px)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: '#94a3b8',
+                fontSize: '13px',
+                fontStyle: 'italic',
+              }}>
+                The middle collapsed → AI
+              </div>
+              {/* Budget tier */}
+              <div style={{
+                width: '10%',
+                background: '#10b981',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: '#ffffff',
+                fontSize: '10px',
+                fontWeight: 600,
+              }}>
+                DIY
+              </div>
+            </div>
+          </div>
+
+          {/* Labels */}
+          <div style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            fontSize: '12px',
+          }}>
+            <div style={{
+              maxWidth: '120px',
+              textAlign: 'left',
+            }}>
+              <div style={{ fontWeight: 600, color: '#3b82f6', marginBottom: '4px' }}>
+                Luxury tier (~10%)
+              </div>
+              <div style={{ color: '#64748b', lineHeight: 1.4 }}>
+                Human service as status flex
+              </div>
+            </div>
+            <div style={{
+              maxWidth: '180px',
+              textAlign: 'center',
+              color: '#94a3b8',
+              fontStyle: 'italic',
+            }}>
+              This is where 80% of jobs were
+            </div>
+            <div style={{
+              maxWidth: '120px',
+              textAlign: 'right',
+            }}>
+              <div style={{ fontWeight: 600, color: '#10b981', marginBottom: '4px' }}>
+                Budget tier (~10%)
+              </div>
+              <div style={{ color: '#64748b', lineHeight: 1.4 }}>
+                Fully automated, near-zero cost
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Real example */}
+        <div style={{
+          background: '#f8fafc',
+          borderRadius: '12px',
+          padding: '24px',
+          marginTop: '24px',
+          border: '1px solid #e2e8f0',
+        }}>
+          <div style={{
+            fontSize: '14px',
+            fontWeight: 600,
+            color: '#0f172a',
+            marginBottom: '16px',
+          }}>
+            Real example: Travel Agents
+          </div>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))',
+            gap: '16px',
+          }}>
+            <div>
+              <div style={{ fontSize: '24px', fontWeight: 700, color: '#475569' }}>124,000</div>
+              <div style={{ fontSize: '12px', color: '#94a3b8' }}>Jobs in 2000</div>
+            </div>
+            <div>
+              <div style={{ fontSize: '24px', fontWeight: 700, color: '#ef4444' }}>65,000</div>
+              <div style={{ fontSize: '12px', color: '#94a3b8' }}>Jobs in 2024 (-47%)</div>
+            </div>
+            <div>
+              <div style={{ fontSize: '24px', fontWeight: 700, color: '#3b82f6' }}>70%</div>
+              <div style={{ fontSize: '12px', color: '#94a3b8' }}>Bookings now online</div>
+            </div>
+          </div>
+          <div style={{
+            marginTop: '16px',
+            padding: '12px',
+            background: '#fef3c7',
+            borderRadius: '8px',
+            fontSize: '13px',
+            color: '#92400e',
+          }}>
+            "Travel agents still exist" is technically true — but misleading. The job title persists;
+            the addressable market collapsed. Survivors serve the luxury tier only.
+          </div>
+        </div>
+
+        <Body style={{ marginTop: '32px' }}>
+          <strong>This is the pattern:</strong> The job "exists" but 80% of the market is gone.
+          The middle — decent-but-not-premium human service — disappears entirely.
+        </Body>
+      </Section>
+
+      {/* Chapter 5: The Pattern */}
+      <Section bg="#ffffff" id="the-pattern">
+        <Label>Chapter 5</Label>
         <Headline>This has happened before</Headline>
         <Body>
           Value chain collapse isn't new. It's the defining pattern of technology disruption.
@@ -506,7 +720,139 @@ export default function App() {
         </Quote>
       </Section>
 
-      {/* Chapter 5: The Question */}
+      {/* Chapter 6: Human Help as the New Flex */}
+      <Section bg="#f8fafc" id="human-flex">
+        <Label color="#f59e0b">Chapter 6</Label>
+        <Headline>Human help is the new flex</Headline>
+        <Body>
+          When AI handles most cognitive tasks, something surprising happens:
+          <strong> human service becomes the luxury signal</strong>.
+        </Body>
+        <Body>
+          Think about it. When automation was rare, it was the premium ("high-tech,"
+          "efficient"). When human labor was abundant, it was the default. But when
+          AI is everywhere?
+        </Body>
+
+        <Quote>
+          "A person made my dinner." That's the flex now. Not "I used an app."
+        </Quote>
+
+        {/* Examples grid */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+          gap: '16px',
+          marginTop: '32px',
+        }}>
+          <div style={{
+            background: '#ffffff',
+            border: '1px solid #e2e8f0',
+            borderRadius: '12px',
+            padding: '20px',
+          }}>
+            <div style={{
+              fontSize: '24px',
+              marginBottom: '12px',
+            }}>🍽️</div>
+            <div style={{
+              fontSize: '14px',
+              fontWeight: 600,
+              color: '#0f172a',
+              marginBottom: '8px',
+            }}>Food</div>
+            <div style={{ fontSize: '13px', color: '#64748b' }}>
+              <span style={{ color: '#94a3b8' }}>Mass:</span> Meal kits, fast food<br/>
+              <span style={{ color: '#3b82f6' }}>Flex:</span> Personal chef, farm-to-table
+            </div>
+          </div>
+          <div style={{
+            background: '#ffffff',
+            border: '1px solid #e2e8f0',
+            borderRadius: '12px',
+            padding: '20px',
+          }}>
+            <div style={{
+              fontSize: '24px',
+              marginBottom: '12px',
+            }}>💰</div>
+            <div style={{
+              fontSize: '14px',
+              fontWeight: 600,
+              color: '#0f172a',
+              marginBottom: '8px',
+            }}>Finance</div>
+            <div style={{ fontSize: '13px', color: '#64748b' }}>
+              <span style={{ color: '#94a3b8' }}>Mass:</span> Robo-advisor, AI prep<br/>
+              <span style={{ color: '#3b82f6' }}>Flex:</span> "My financial advisor"
+            </div>
+          </div>
+          <div style={{
+            background: '#ffffff',
+            border: '1px solid #e2e8f0',
+            borderRadius: '12px',
+            padding: '20px',
+          }}>
+            <div style={{
+              fontSize: '24px',
+              marginBottom: '12px',
+            }}>✍️</div>
+            <div style={{
+              fontSize: '14px',
+              fontWeight: 600,
+              color: '#0f172a',
+              marginBottom: '8px',
+            }}>Content</div>
+            <div style={{ fontSize: '13px', color: '#64748b' }}>
+              <span style={{ color: '#94a3b8' }}>Mass:</span> AI-generated<br/>
+              <span style={{ color: '#3b82f6' }}>Flex:</span> "Written by a human"
+            </div>
+          </div>
+          <div style={{
+            background: '#ffffff',
+            border: '1px solid #e2e8f0',
+            borderRadius: '12px',
+            padding: '20px',
+          }}>
+            <div style={{
+              fontSize: '24px',
+              marginBottom: '12px',
+            }}>👔</div>
+            <div style={{
+              fontSize: '14px',
+              fontWeight: 600,
+              color: '#0f172a',
+              marginBottom: '8px',
+            }}>Clothing</div>
+            <div style={{ fontSize: '13px', color: '#64748b' }}>
+              <span style={{ color: '#94a3b8' }}>Mass:</span> Algorithmic picks<br/>
+              <span style={{ color: '#3b82f6' }}>Flex:</span> Bespoke tailor
+            </div>
+          </div>
+        </div>
+
+        <Body style={{ marginTop: '32px' }}>
+          This isn't a counterexample to compression — it's the <strong>residual structure</strong> after
+          compression. The total value captured by humans drops dramatically. But it doesn't go to zero.
+          It concentrates at the top percentile, reframed as premium.
+        </Body>
+
+        <div style={{
+          background: '#fef3c7',
+          borderRadius: '12px',
+          padding: '20px',
+          marginTop: '24px',
+          borderLeft: '4px solid #f59e0b',
+        }}>
+          <div style={{ fontSize: '14px', color: '#92400e', fontWeight: 500 }}>
+            The pattern emerging: "Artisanal" spreads to knowledge work. We already have
+            "handcrafted" goods and "farm-to-table" food. Next: "human-written," "human-advised,"
+            "human-prepared."
+          </div>
+        </div>
+      </Section>
+
+      {/* Chapter 7: The Question */}
       <Section bg="#0f172a" id="the-question">
         <Label color="#60a5fa">The Question</Label>
         <h2 style={{
