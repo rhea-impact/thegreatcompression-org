@@ -599,7 +599,7 @@ export const siteContent: SiteContent = {
       "Thomson Reuters also buys Tableau from Salesforce, because raw data isn't useful until you can see it. They package these insights into compliance tools and sell them to accounting firms with thousands of clients.",
       'This is how enterprise software works: layers upon layers of companies, each adding value (and taking margin) because the problem is too complex for any single entity to solve.',
     ],
-    transition: "Let's see what that looks like.",
+    transition: "This is the system Sal navigates every day.",
   },
 
   valueChainBefore: {
@@ -646,7 +646,7 @@ export const siteContent: SiteContent = {
     },
     examples: flexExamples,
     callout:
-      "This isn't a counterexample. It's the residual premium after compression. The mass market evaporates; what remains is reframed as luxury.",
+      "This isn't a counterexample. It's the residual premium after compression. The mass market evaporates; what remains is reframed as luxury. But not everyone accepts this quietly.",
     openQuestion:
       'Does the luxury tier grow fast enough to absorb displaced workers? Probably not.',
   },
@@ -656,7 +656,7 @@ export const siteContent: SiteContent = {
     factors: resistanceFactors,
     industries: regulatedIndustries,
     keyInsight:
-      "Regulation delays but doesn't prevent. The question: Is the protection structural (physical, safety-critical) or political (lobby-created)?",
+      "Regulation delays but doesn't prevent. The question: Is the protection structural (physical, safety-critical) or political (lobby-created)? And the market has its own plans.",
     legalZoomPrecedent:
       'Bar associations fought document automation for 20 years. They mostly lost. The next wave is AI + attorney blessing.',
   },

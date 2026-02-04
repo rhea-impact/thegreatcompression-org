@@ -19,6 +19,8 @@ interface AnimatedSectionProps {
   children: ReactNode;
   delay?: number;
   className?: string;
+  paddingTop?: number;
+  paddingBottom?: number;
 }
 
 export function AnimatedSection({
@@ -26,12 +28,17 @@ export function AnimatedSection({
   background = 'white',
   children,
   delay = 0,
+  paddingTop = 100,
+  paddingBottom = 100,
 }: AnimatedSectionProps) {
   const { ref, isVisible } = useScrollAnimation({ threshold: 0.1 });
   const isDark = background === 'dark';
 
   const style: CSSProperties = {
-    padding: '100px 24px',
+    paddingTop: `${paddingTop}px`,
+    paddingBottom: `${paddingBottom}px`,
+    paddingLeft: '24px',
+    paddingRight: '24px',
     background: backgrounds[background],
     borderBottom: isDark ? 'none' : '1px solid #e2e8f0',
   };

@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 200" width="800" height="200">
+  <defs>
+    <!-- Spray paint texture filter -->
+    <filter id="spray" x="-20%" y="-20%" width="140%" height="140%">
+      <!-- Turbulence for spray dots -->
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" result="noise"/>
+      <!-- Threshold the noise -->
+      <feColorMatrix type="matrix" in="noise" result="threshold"
+        values="1 0 0 0 0
+                0 1 0 0 0
+                0 0 1 0 0
+                0 0 0 15 -8"/>
+      <!-- Composite with original text -->
+      <feComposite in="SourceGraphic" in2="threshold" operator="in" result="sprayed"/>
+      <!-- Add glow -->
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="glow"/>
+      <feMerge>
+        <feMergeNode in="glow"/>
+        <feMergeNode in="sprayed"/>
+      </feMerge>
+    </filter>
+
+    <!-- Drip effect filter -->
+    <filter id="drips" x="-10%" y="-10%" width="120%" height="150%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="3" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="8" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+
+    <!-- Combined spray + glow -->
+    <filter id="sprayGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur"/>
+      <feColorMatrix type="matrix" in="blur" result="glow"
+        values="1 0 0 0 0
+                0.5 0 0 0 0
+                0 0 0 0 0
+                0 0 0 0.6 0"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" result="noise"/>
+      <feColorMatrix type="matrix" in="noise" result="threshold"
+        values="1 0 0 0 0
+                0 1 0 0 0
+                0 0 1 0 0
+                0 0 0 18 -9"/>
+      <feComposite in="SourceGraphic" in2="threshold" operator="in" result="sprayed"/>
+      <feMerge>
+        <feMergeNode in="glow"/>
+        <feMergeNode in="sprayed"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Main text with spray effect -->
+  <text
+    x="400"
+    y="130"
+    text-anchor="middle"
+    font-family="'Impact', 'Arial Black', sans-serif"
+    font-size="120"
+    font-weight="900"
+    fill="#d97706"
+    filter="url(#sprayGlow)"
+    transform="rotate(-2, 400, 100)"
+  >COMPRESSION</text>
+
+  <!-- Overspray dots (scattered) -->
+  <g fill="#d97706" opacity="0.4">
+    <circle cx="50" cy="80" r="2"/>
+    <circle cx="55" cy="150" r="1.5"/>
+    <circle cx="750" cy="60" r="2"/>
+    <circle cx="740" cy="140" r="1"/>
+    <circle cx="30" cy="120" r="1"/>
+    <circle cx="770" cy="100" r="1.5"/>
+    <circle cx="100" cy="40" r="1"/>
+    <circle cx="700" cy="170" r="1.5"/>
+  </g>
+</svg>
