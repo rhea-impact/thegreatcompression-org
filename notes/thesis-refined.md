@@ -21,6 +21,29 @@ Value chains built on two types of complexity are vulnerable:
 
 When technology eliminates the asymmetry or handles the cognition, the chain compresses.
 
+### 1b. Sigmoid Compression (Not Binary)
+
+Compression doesn't eliminate jobs binary-style. It compresses across the sigmoid:
+
+- The **mass market** (80-90%) shifts to AI
+- The **premium tier** (10-20%) retains human service — but reframed as luxury
+- The job title "exists" but the addressable market collapses
+
+Example: Travel agents — 124,000 jobs in 2000 → ~65,000 in 2024. "They still exist" but 70% of bookings are now online. Survivors clustered in luxury/complex niches.
+
+Example: Tax prep — $2,000 engagements become $200 reviews. The human is still there, but as a "blessing man" (final check), not the primary worker. 90% of the value captured is gone.
+
+### 1c. Human Help as the New Flex
+
+Post-compression, scarcity inverts:
+
+- When AI handles most tasks, human service becomes the **luxury signal**
+- "A person made my dinner" = status
+- "My accountant" (not "I use AI") = flex
+- "Hand-crafted" spreads to knowledge work: "human-written," "human-advised"
+
+This isn't a counterexample to compression — it's the **residual premium** after compression. The mass market evaporates; the luxury tier remains or grows in per-unit value due to scarcity.
+
 ### 2. Regulation as Friction
 
 Industries that resist compression share a common trait: heavy regulation.
